@@ -4,7 +4,8 @@ import { Filter } from './Filter/Filter';
 import css from './App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchContactWithoutCreateAsyncThunk } from 'services/fetch';
+import { fetchContacts } from 'services/fetch';
+// import { fetchContactWithoutCreateAsyncThunk } from 'services/fetch';
 
 // ^ Рефакторінг у Redux
 
@@ -19,12 +20,12 @@ export const App = () => {
   } = useSelector(store => store.storeAsyncThunk);
 
   const str = JSON.stringify(contacts, null, 2);
-  console.log('App >> str:', str);
+  // console.log('App >> str:', str);
 
   // Виклик "операції":
   useEffect(() => {
     // * Without createAsyncThunk()
-    dispatch(fetchContactWithoutCreateAsyncThunk());
+    dispatch(fetchContacts());
     // dispatch(fetchContacts());
   }, [dispatch]);
 
