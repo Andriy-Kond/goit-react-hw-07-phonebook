@@ -4,7 +4,7 @@ import { useState } from 'react';
 // ^ Рефакторінг у Redux
 // Для звертання до стору Redux - useSelector, для запуску необхідної дії (необхідного редюсера) - useDispatch
 import { useDispatch, useSelector } from 'react-redux';
-import { addInStateContact } from '../../store/phoneBookSlice';
+import { addInStateContact } from '../../store/SlicePhoneBook';
 import { nanoid } from '@reduxjs/toolkit';
 
 export const UserForm = () => {
@@ -39,7 +39,7 @@ export const UserForm = () => {
       // спроба створити об'єкт:
       const isCreated = dispatch(
         addInStateContact({
-          userName,
+          name: userName,
           number: Number(userNumber), // інакше записується як рядок
           id: nanoid(),
         })
@@ -52,6 +52,10 @@ export const UserForm = () => {
       }
     }
   };
+
+  // const fetchContactTest = () => {
+  //   fetchContactWithCreateAsyncThunk();
+  // };
 
   // Повертаю розмітку:
   return (
@@ -93,6 +97,16 @@ export const UserForm = () => {
 
         <button className={css.submitBtn} type="submit">
           Add contact
+        </button>
+
+        <button
+          className={css.submitBtn}
+          type="button"
+          // onClick={() => {
+          //   fetchContactWithCreateAsyncThunk();
+          // }}
+        >
+          fetch
         </button>
       </div>
     </form>

@@ -3,7 +3,7 @@ import css from './Contacts.module.css';
 
 // ^ Рефакторінг у Redux
 import { useDispatch } from 'react-redux';
-import { deleteInStateContact } from 'store/phoneBookSlice';
+import { deleteInStateContact } from 'store/SlicePhoneBook';
 
 export function MarkupContacts({ name, number, id }) {
   const dispatch = useDispatch();

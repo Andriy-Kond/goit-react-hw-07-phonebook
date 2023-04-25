@@ -2,7 +2,7 @@ import css from './Filter.module.css';
 
 // ^ Рефакторінг у Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { filterInStateContacts } from 'store/filterSlice';
+import { filterInStateContacts } from 'store/sliceFilter';
 
 export const Filter = () => {
   const dispatch = useDispatch();

@@ -20,7 +20,7 @@ export const Contacts = () => {
   // Рендер відфільтрованих контактів:
   return (
     // Щоби не було пустого ul:
-    filteredContacts.length !== 0 && (
+    filteredContacts.length > 0 && (
       <ul className={css.list}>
         {filteredContacts.map(({ name, number, id }) => {
           return (
