@@ -1,4 +1,4 @@
-import { addContacts, deleteContact, fetchContacts } from '../services/fetch';
+import { addContact, deleteContact, fetchContacts } from '../services/fetch';
 
 const { createSlice } = require('@reduxjs/toolkit');
 
@@ -34,16 +34,16 @@ const addHandleFulfilled = (state, action) => {
 const deleteHandleFulfilled = (state, action) => {
   state.isLoading = false;
   state.error = null;
-  const index = state.stateContacts.findIndex(contact => {
-    return contact.id === action.payload.id;
-  });
+  const index = state.stateContacts.findIndex(
+    contact => contact.id === action.payload.id
+  );
   state.stateContacts.splice(index, 1);
 };
 // * /Для скорочення коду extraReducers
 
 // // Оптимізація для скорочення назви у масиві функції isAnyOf([], callback)
 // // Створюємо масив з імен і додаємо до кожного якийсь статус, в залежності від ситуації
-// const namesArr = [fetchContacts, addContacts, deleteContact];
+// const namesArr = [fetchContacts, addContact, deleteContact];
 // const addStatusToName = status => namesArr.map(name => name[status]);
 
 const sliceAsyncThunk = createSlice({
@@ -57,9 +57,9 @@ const sliceAsyncThunk = createSlice({
       .addCase(fetchContacts.fulfilled, fetchHandleFulfilled)
       .addCase(fetchContacts.rejected, handleRejected) // переніс у isAnyOf
 
-      .addCase(addContacts.pending, handlePending) // переніс у isAnyOf
-      .addCase(addContacts.fulfilled, addHandleFulfilled)
-      .addCase(addContacts.rejected, handleRejected) // переніс у isAnyOf
+      .addCase(addContact.pending, handlePending) // переніс у isAnyOf
+      .addCase(addContact.fulfilled, addHandleFulfilled)
+      .addCase(addContact.rejected, handleRejected) // переніс у isAnyOf
 
       .addCase(deleteContact.pending, handlePending) // переніс у isAnyOf
       .addCase(deleteContact.fulfilled, deleteHandleFulfilled)
@@ -71,7 +71,7 @@ const sliceAsyncThunk = createSlice({
     // ! Uncaught TypeError: matcher is not a function
     // .addMatcher(
     //   isAnyOf(
-    //     [fetchContacts.pending, addContacts.pending, deleteContact.pending],
+    //     [fetchContacts.pending, addContact.pending, deleteContact.pending],
     //     handlePending
     //   )
     // );
@@ -81,7 +81,7 @@ const sliceAsyncThunk = createSlice({
     //   isAnyOf(
     //     [
     //       fetchContacts.rejected,
-    //       addContacts.rejected,
+    //       addContact.rejected,
     //       deleteContact.rejected,
     //     ],
     //     handleRejected

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { addInStateContact } from '../../store/SlicePhoneBook';
 // import { nanoid } from '@reduxjs/toolkit';
 import { selectContacts } from 'store/selectors';
-import { addContacts } from 'services/fetch';
+import { addContact } from 'services/fetch';
 
 export const UserForm = () => {
   // dispatch - це як тригер, що відбулась подія. Але нам треба вказати яка саме
@@ -40,7 +40,7 @@ export const UserForm = () => {
     } else {
       // спроба створити об'єкт:
       const isCreated = dispatch(
-        addContacts({ name: userName, phone: userNumber })
+        addContact({ name: userName, phone: userNumber })
       );
 
       // Якщо новий об'єкт створений успішно, то обнуляємо поля інпутів у формі
