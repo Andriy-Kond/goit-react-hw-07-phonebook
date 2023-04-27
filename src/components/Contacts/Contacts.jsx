@@ -3,13 +3,11 @@ import css from './Contacts.module.css';
 // ^ Рефакторінг у Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { MarkupContacts } from './MarkupContacts';
-import { selectContacts, selectError, selectFilter } from 'store/selectors';
+import { selectContacts, selectFilter } from 'store/selectors';
 import { useEffect } from 'react';
 import { fetchContacts } from 'services/fetch';
 
 export const Contacts = () => {
-  const error = useSelector(selectError);
-
   const dispatch = useDispatch();
   // Виклик "операції":
   useEffect(() => {
@@ -30,23 +28,19 @@ export const Contacts = () => {
 
   // Рендер відфільтрованих контактів:
   return (
-    <>
-      {error && <h2>Error: {error}</h2>}
-
-      {filteredContacts.length > 0 && (
-        <ul className={css.list}>
-          {filteredContacts.map(({ name, phone: number, id }) => {
-            return (
-              <MarkupContacts
-                key={id}
-                name={name}
-                number={number}
-                id={id}
-              ></MarkupContacts>
-            );
-          })}
-        </ul>
-      )}
-    </>
+    filteredContacts.length > 0 && (
+      <ul className={css.list}>
+        {filteredContacts.map(({ name, phone: number, id }) => {
+          return (
+            <MarkupContacts
+              key={id}
+              name={name}
+              number={number}
+              id={id}
+            ></MarkupContacts>
+          );
+        })}
+      </ul>
+    )
   );
 };

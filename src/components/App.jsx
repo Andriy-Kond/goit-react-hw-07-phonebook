@@ -26,6 +26,7 @@ export const App = () => {
       </div>
 
       <Contacts />
+      {error && <h2>Error: {error}</h2>}
     </div>
   );
 };
