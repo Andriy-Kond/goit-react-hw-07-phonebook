@@ -21,7 +21,10 @@ export const App = () => {
       <UserForm />
       <h2>Contacts</h2>
       <Filter />
-      {isLoading && !error && <PreLoader />}
+      <div style={{ height: '40px', display: 'flex', alignItems: 'center' }}>
+        {isLoading && !error && <PreLoader />}
+      </div>
+
       <Contacts />
     </div>
   );

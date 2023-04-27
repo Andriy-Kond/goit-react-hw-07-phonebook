@@ -3,12 +3,18 @@ import css from './Contacts.module.css';
 // ^ Рефакторінг у Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { MarkupContacts } from './MarkupContacts';
-import { selectContacts, selectError, selectFilter } from 'store/selectors';
+import {
+  selectContacts,
+  selectError,
+  selectFilter,
+  selectIsLoading,
+} from 'store/selectors';
 import { useEffect } from 'react';
 import { fetchContacts } from 'services/fetch';
 
 export const Contacts = () => {
   const error = useSelector(selectError);
+
   const dispatch = useDispatch();
   // Виклик "операції":
   useEffect(() => {
