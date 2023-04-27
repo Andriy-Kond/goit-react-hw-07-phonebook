@@ -1,6 +1,6 @@
 import { addContacts, deleteContact, fetchContacts } from '../services/fetch';
 
-const { createSlice, isAnyOf } = require('@reduxjs/toolkit');
+const { createSlice } = require('@reduxjs/toolkit');
 
 const initialState = {
   stateContacts: [],
