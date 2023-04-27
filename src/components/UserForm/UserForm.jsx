@@ -4,13 +4,15 @@ import { useState } from 'react';
 // ^ Рефакторінг у Redux
 // Для звертання до стору Redux - useSelector, для запуску необхідної дії (необхідного редюсера) - useDispatch
 import { useDispatch, useSelector } from 'react-redux';
-import { addInStateContact } from '../../store/SlicePhoneBook';
-import { nanoid } from '@reduxjs/toolkit';
+// import { addInStateContact } from '../../store/SlicePhoneBook';
+// import { nanoid } from '@reduxjs/toolkit';
+import { selectContacts } from 'store/selectors';
+import { addContacts } from 'services/fetch';
 
 export const UserForm = () => {
   // dispatch - це як тригер, що відбулась подія. Але нам треба вказати яка саме
   const dispatch = useDispatch();
-  const contacts = useSelector(store => store.storeContacts.stateContacts);
+  const contacts = useSelector(selectContacts);
 
   // Локальні стейти немає сенсу переносити у глобальний Redux:
   const [userName, setUserName] = useState('');
@@ -38,11 +40,7 @@ export const UserForm = () => {
     } else {
       // спроба створити об'єкт:
       const isCreated = dispatch(
-        addInStateContact({
-          name: userName,
-          number: Number(userNumber), // інакше записується як рядок
-          id: nanoid(),
-        })
+        addContacts({ name: userName, phone: userNumber })
       );
 
       // Якщо новий об'єкт створений успішно, то обнуляємо поля інпутів у формі
@@ -52,10 +50,6 @@ export const UserForm = () => {
       }
     }
   };
-
-  // const fetchContactTest = () => {
-  //   fetchContactWithCreateAsyncThunk();
-  // };
 
   // Повертаю розмітку:
   return (
@@ -97,16 +91,6 @@ export const UserForm = () => {
 
         <button className={css.submitBtn} type="submit">
           Add contact
-        </button>
-
-        <button
-          className={css.submitBtn}
-          type="button"
-          // onClick={() => {
-          //   fetchContactWithCreateAsyncThunk();
-          // }}
-        >
-          fetch
         </button>
       </div>
     </form>

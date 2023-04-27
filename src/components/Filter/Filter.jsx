@@ -3,10 +3,11 @@ import css from './Filter.module.css';
 // ^ Рефакторінг у Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { filterInStateContacts } from 'store/sliceFilter';
+import { selectFilter } from 'store/selectors';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(store => store.storeFilter.stateFilter);
+  const filter = useSelector(selectFilter);
 
   // Отримання даних з поля input
   const getInput = ({ target: { value } }) => {
