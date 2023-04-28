@@ -43,8 +43,8 @@ const deleteHandleFulfilled = (state, action) => {
 
 // Оптимізація для скорочення назви у масиві функції isAnyOf([], callback)
 // Створюємо масив з імен і додаємо до кожного якийсь статус, в залежності від ситуації
-// const namesArr = [fetchContacts, addContact, deleteContact];
-// const addStatusToName = status => namesArr.map(name => name[status]);
+const namesArr = [fetchContacts, addContact, deleteContact];
+const addStatusToName = status => namesArr.map(name => name[status]);
 
 const sliceAsyncThunk = createSlice({
   name: 'fetchContacts',
@@ -53,6 +53,7 @@ const sliceAsyncThunk = createSlice({
   // ~ Новий метод: 'builder callback' notation
   extraReducers: builder => {
     builder
+      // & Варіант 1 з addCase
       // .addCase(fetchContacts.pending, handlePending) // переніс у isAnyOf
       .addCase(fetchContacts.fulfilled, fetchHandleFulfilled)
       // .addCase(fetchContacts.rejected, handleRejected) // переніс у isAnyOf
@@ -64,31 +65,30 @@ const sliceAsyncThunk = createSlice({
       // .addCase(deleteContact.pending, handlePending) // переніс у isAnyOf
       .addCase(deleteContact.fulfilled, deleteHandleFulfilled)
       // .addCase(deleteContact.rejected, handleRejected) // переніс у isAnyOf
+
       // isAnyOf працює як логічне АБО. Приймає масив.
       // Читається так: якщо хтось з перелічених з масиву, то роби колбек після коми
+      // & Варіант 2 з addMatcher
+      // .addMatcher(
+      //   isAnyOf(
+      //     fetchContacts.pending,
+      //     addContact.pending,
+      //     deleteContact.pending
+      //   ),
+      //   handlePending
+      // )
+      // .addMatcher(
+      //   isAnyOf(
+      //     fetchContacts.rejected,
+      //     addContact.rejected,
+      //     deleteContact.rejected
+      //   ),
+      //   handleRejected
+      // );
 
-      // ??? Чомусь не працює!
-      // ! Uncaught TypeError: matcher is not a function
-      .addMatcher(
-        isAnyOf([
-          fetchContacts.pending,
-          addContact.pending,
-          deleteContact.pending,
-        ]),
-        handlePending
-      )
-      .addMatcher(
-        isAnyOf([
-          fetchContacts.rejected,
-          addContact.rejected,
-          deleteContact.rejected,
-        ]),
-        handleRejected
-      );
-
-    // Так працює:
-    // .addMatcher(isAnyOf(...addStatusToName('pending')), handlePending)
-    // .addMatcher(isAnyOf(...addStatusToName('rejected')), handleRejected);
+      // & Варіант 3 - з додатковою функцією додавання статусу
+      .addMatcher(isAnyOf(...addStatusToName('pending')), handlePending)
+      .addMatcher(isAnyOf(...addStatusToName('rejected')), handleRejected);
   },
 });
 
