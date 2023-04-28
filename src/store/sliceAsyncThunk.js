@@ -9,6 +9,7 @@ const initialState = {
 };
 
 // * Для скорочення коду extraReducers:
+// & Однакові загальні методи для всіх pending і всіх rejected
 const handlePending = state => {
   state.isLoading = true;
 };
@@ -20,24 +21,30 @@ const handleRejected = (state, action) => {
 
 // & під кожен fullFilled своя функція:
 const fetchHandleFulfilled = (state, action) => {
-  state.isLoading = false;
-  state.error = null;
+  // state.isLoading = false;
+  // state.error = null;
   state.stateContacts = action.payload;
 };
 
 const addHandleFulfilled = (state, action) => {
-  state.isLoading = false;
-  state.error = null;
+  // state.isLoading = false;
+  // state.error = null;
   state.stateContacts.push(action.payload);
 };
 
 const deleteHandleFulfilled = (state, action) => {
-  state.isLoading = false;
-  state.error = null;
+  // state.isLoading = false;
+  // state.error = null;
   const index = state.stateContacts.findIndex(
     contact => contact.id === action.payload.id
   );
   state.stateContacts.splice(index, 1);
+};
+
+// & Додаткове скорочення коду у всіх fulFilled:
+const handleFulfilled = state => {
+  state.isLoading = false;
+  state.error = null;
 };
 // * /Для скорочення коду extraReducers
 
@@ -68,6 +75,7 @@ const sliceAsyncThunk = createSlice({
 
       // isAnyOf працює як логічне АБО. Приймає масив.
       // Читається так: якщо хтось з перелічених з масиву, то роби колбек після коми
+
       // & Варіант 2 з addMatcher
       // .addMatcher(
       //   isAnyOf(
@@ -88,7 +96,9 @@ const sliceAsyncThunk = createSlice({
 
       // & Варіант 3 - з додатковою функцією додавання статусу
       .addMatcher(isAnyOf(...addStatusToName('pending')), handlePending)
-      .addMatcher(isAnyOf(...addStatusToName('rejected')), handleRejected);
+      .addMatcher(isAnyOf(...addStatusToName('rejected')), handleRejected)
+      // Ще одне поращення для скорочення коду:
+      .addMatcher(isAnyOf(...addStatusToName('fulfilled')), handleFulfilled);
   },
 });
 
