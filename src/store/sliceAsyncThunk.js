@@ -43,8 +43,8 @@ const deleteHandleFulfilled = (state, action) => {
 
 // Оптимізація для скорочення назви у масиві функції isAnyOf([], callback)
 // Створюємо масив з імен і додаємо до кожного якийсь статус, в залежності від ситуації
-const namesArr = [fetchContacts, addContact, deleteContact];
-const addStatusToName = status => namesArr.map(name => name[status]);
+// const namesArr = [fetchContacts, addContact, deleteContact];
+// const addStatusToName = status => namesArr.map(name => name[status]);
 
 const sliceAsyncThunk = createSlice({
   name: 'fetchContacts',
@@ -77,8 +77,6 @@ const sliceAsyncThunk = createSlice({
         ]),
         handlePending
       )
-      // ??? Чомусь не працює!
-      // ! Uncaught TypeError: matcher is not a function
       .addMatcher(
         isAnyOf([
           fetchContacts.rejected,
