@@ -2,6 +2,10 @@ import { addContact, deleteContact, fetchContacts } from '../services/fetch';
 
 const { createSlice, isAnyOf } = require('@reduxjs/toolkit');
 
+const PENDING = 'pending';
+const REJECTED = 'rejected';
+const FULFILLED = 'fulfilled';
+
 const initialState = {
   stateContacts: [],
   isLoading: false,
@@ -23,6 +27,8 @@ const handleRejected = (state, action) => {
 const fetchHandleFulfilled = (state, action) => {
   // state.isLoading = false;
   // state.error = null;
+
+  // handleFulfilled(state) - можна викликати тут, а можна після всіх addMatcher в окремому addMatcher
   state.stateContacts = action.payload;
 };
 
@@ -95,10 +101,10 @@ const sliceAsyncThunk = createSlice({
       // );
 
       // & Варіант 3 - з додатковою функцією додавання статусу
-      .addMatcher(isAnyOf(...addStatusToName('pending')), handlePending)
-      .addMatcher(isAnyOf(...addStatusToName('rejected')), handleRejected)
+      .addMatcher(isAnyOf(...addStatusToName(PENDING)), handlePending)
+      .addMatcher(isAnyOf(...addStatusToName(REJECTED)), handleRejected)
       // Ще одне поращення для скорочення коду:
-      .addMatcher(isAnyOf(...addStatusToName('fulfilled')), handleFulfilled);
+      .addMatcher(isAnyOf(...addStatusToName(FULFILLED)), handleFulfilled);
   },
 });
 
